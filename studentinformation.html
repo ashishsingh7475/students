@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+        }
+        input, select {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            background-color: rgb(2 158, 255);
+            border: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Student Information Form</h1>
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <h3>Parent's Information</h3>
+        <label for="fatherName">Father's Name:</label>
+        <input type="text" id="fatherName" name="fatherName" required>
+
+        <label for="motherName">Mother's Name:</label>
+        <input type="text" id="motherName" name="motherName" required>
+
+        <h3>Contact Information</h3>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="number" id="phoneNumber" name="phoneNumber" required>
+
+        <h3>Address Information</h3>
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="pincode">Pin Code:</label>
+        <input type="number" id="pincode" name="pincode" required>
+
+        <h3>Qualification</h3>
+        <label for="qualification">Class/Qualification:</label>
+        <select id="qualification" name="qualification" required>
+            <option value="">Select your class</option>
+            <option value="Class I">Class I</option>
+            <option value="Class II">Class II</option>
+            <option value="Class III">Class III</option>
+            <option value="Class IV">Class IV</option>
+            <option value="Class V">Class V</option>
+            <option value="Class VI">Class VI</option>
+        </select>
+
+        <label for="photo">Upload Photo Proof (Report Card):</label>
+        <input type="file" id="photo" name="photo" accept="image/*" required>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+</div>
+<script>
+    function submitForm() {
+        const name = document.getElementById('name').value;
+        const fatherName = document.getElementById('fatherName').value;
+        const motherName = document.getElementById('motherName').value;
+        const phoneNumber = document.getElementById('phoneNumber').value;
+        const state = document.getElementById('state').value;
+        const city = document.getElementById('city').value;
+        const pincode = document.getElementById('pincode').value;
+        const qualification = document.getElementById('qualification').value;
+        const photo = document.getElementById('photo').value;
+
+        if (name === '' || fatherName === '' || motherName === '' || phoneNumber === '' || state === '' 
+            || city === '' || pincode === '' || qualification === '' || photo === '') {
+            alert('Please fill in all fields before submitting.');
+        } else {
+            downloadCSV(name, fatherName, motherName, phoneNumber, state, city, pincode, qualification);
+        }
+    }
+
+    function downloadCSV(name, fatherName, motherName, phoneNumber, state, city, pincode, qualification) {
+        const csvContent = `Name,Father's Name,Mother's Name,Phone Number,State,City,Pincode,Qualification\n${name},${fatherName},${motherName},${phoneNumber},${state},${city},${pincode},${qualification}`;
+        const encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'student_information.csv');
+        document.body.appendChild(link);
+        link.click();
+    }
+</script>
+</body>
+</html>
